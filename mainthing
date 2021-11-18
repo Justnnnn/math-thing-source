@@ -1,0 +1,136 @@
+#libraries 
+import pygame
+from random import *
+import random
+import math
+import time
+import operator
+
+pygame.init() #iniatjings pygame thing idk why
+
+#variables
+background_colour = (20, 20, 20)
+screensize = (1920, 1080)
+screen = pygame.display.set_mode(screensize)
+clock = pygame.time.Clock()
+fps = 60
+running = True
+symbols = [' +', ' -', ' *', ' /']
+symbols = {'+':operator.add,
+            '-':operator.sub,
+            '*':operator.mul}
+
+#sound variable things
+music = pygame.mixer.Sound('relax.mp3')
+answerpop = pygame.mixer.Sound('answerpop.wav')
+equationpop = pygame.mixer.Sound('equationpop.wav')
+
+#settings/playing
+music.play(-1)
+equationpop.set_volume(0.2)
+
+#text variable things
+textfontdirectory = 'textstuffwow/PixelOperator.ttf'
+textfont = pygame.font.Font(textfontdirectory, 122)
+textforequation = ''
+
+textfont2 = pygame.font.Font(textfontdirectory, 64)
+titletext = textfont2.render('equation generator thing wowwwwww', False, (182, 182, 182))
+
+textfont3 = pygame.font.Font(textfontdirectory, 32)
+instructionthing = 'how to use:'
+
+                    
+
+instructionstext = textfont3.render(instructionthing, False, (182, 182, 182))
+instructionstext2 = textfont3.render('press the space bar to generate a math equation for chapter 11 big ideas math.', False, (182, 182, 182))
+instructionstext3 = textfont3.render('press tab for the answer. make sure you solve it first so then you expand your learning thing in your head so you get smarter. good luc khahahah!', False, (182, 182, 182))
+answer = ''
+
+textfont3 = pygame.font.Font(textfontdirectory, 115)
+
+textfont4 = pygame.font.Font(textfontdirectory, 32)
+rulestext = textfont4.render('always remember, follow your dreams.', False, (182, 182, 182))
+rulestext2 = textfont4.render('also remember that when you are', False, (182, 182, 182))
+rulestext3 = textfont4.render('subtracting, inverse the thing ig. do something like', False, (182, 182, 182))
+rulestext4 = textfont4.render('-5 - 3 ---> -5 + -3', False, (182, 182, 182))
+
+#the settigns stuf
+pygame.display.set_caption('equation generator thing idk...')
+icon = pygame.image.load('iconthinghah.png')
+pygame.display.set_icon(icon)
+
+
+#cooll loop
+while running:
+
+    #equatoin text variabl thing
+    equationtext = textfont.render(textforequation, False, (182, 182 ,182))
+    answertext = textfont3.render(answer, False, (102, 102, 102))
+
+
+    for event in pygame.event.get():
+           
+        if event.type == pygame.QUIT:
+            running = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+
+            if event.key == pygame.K_SPACE:
+                print('equation has been generated isnt that neat wow ok.')
+                for _ in range(50):
+
+                    randomnumber = randint(-100, 50)
+                    randomnumber2 = randint(-111, 75)
+
+                
+                
+                symbolsdone = random.choice(list(symbols.keys()))
+                textforequation = 'equation: {}'.format(randomnumber) + ' {}'.format(symbolsdone) + ' {}'.format(randomnumber2)
+                print(textforequation)
+                answer = ''
+                equationpop.play()
+
+            if event.key == pygame.K_TAB:
+                randomnumberstr = int(randomnumber)
+                randomnumber2str = int(randomnumber2)
+                answerdone = randomnumberstr + randomnumber2str
+                testthing = str(symbolsdone)
+                print(randomnumberstr + randomnumber2str)
+
+                if '+' in symbolsdone:
+                    answer = 'answer: {}'.format(randomnumberstr + randomnumber2str)
+                    print(randomnumberstr - randomnumber2str)
+                
+                if '-' in symbolsdone:
+                    answer = 'answer: {}'.format(randomnumberstr - randomnumber2str)
+                    print(randomnumberstr - randomnumber2str)
+
+                if '*' in symbolsdone:
+                    answer = 'answer: {}'.format(randomnumberstr * randomnumber2str)
+                    print(randomnumberstr * randomnumber2str)
+
+                if '/' in symbolsdone:
+                    answer = 'answer: {}'.format(randomnumberstr / randomnumber2str)
+                    print(randomnumberstr / randomnumber2str)
+
+                equationpop.play()
+
+      
+    screen.fill(background_colour)
+    screen.blit(equationtext, (325, 250))
+    screen.blit(titletext, (325, 25))
+    screen.blit(answertext, (325, 350))
+    screen.blit(instructionstext, (5, 950))
+    screen.blit(instructionstext2, (5, 1000))
+    screen.blit(instructionstext3, (5, 1050))
+    screen.blit(rulestext, (1300, 700))
+    screen.blit(rulestext2, (1300, 750))
+    screen.blit(rulestext3, (1250, 800))
+    screen.blit(rulestext4, (1400, 850))
+    
+    
+    pygame.display.flip()
+    clock.tick(fps)
